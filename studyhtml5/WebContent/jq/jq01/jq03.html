@@ -1,0 +1,91 @@
+<!--Html comment -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="UTF-8">
+<link rel="shortcut icon" type="image/x-icon" href="/studyhtml5/favicon.ico">
+<!-- reset 스타일 시트 -->
+<link rel="stylesheet" type="text/css" href="/studyhtml5/asset/css/reset.css">
+
+<title>Insert title here</title>
+
+<!-- jquery -->
+<script type="text/javascript" src="/studyhtml5/asset/js/jquery-1.12.4.js"></script>
+<!--스타일 시트 -->
+<style type="text/css">
+  table {
+    width: 100%;
+  }
+  
+  td {
+    border: 1px solid #555;
+  }
+</style>
+<!-- 자바스크립트 코드 -->
+<script type="text/javascript">
+  $(document).ready(function(){
+	  console.log('PCWK ☆☆☆ document');
+	  /* even , odd 의 index가 0부터 시작이어서 0 홀수 1 짝수 개념 적용되있음. */
+	  $('tr:even').css('background','red');
+	  $('tr:odd').css('background','orange');
+	  /* td의 첫번째 요소 */
+	  $('td:first').css('background','yellow');
+	  /* td의 마지막 요소 */
+	  $('td:last').css('background','green');
+	  /* li index는 0부터 시작 */
+	  $('li:eq(0)').css('background','navy');
+	  /* h1~h6: header */
+	  $(':header').css('background','blue');
+	  /* li:gt(0): index가 0보다 큰 요소*/
+	  $('li:gt(0)').css('background','purple');
+	  /* li:lt(n): index가 n보다 작은 요소*/
+  });
+</script>
+</head>
+<body>
+	<h2>필터선택자: ':'를 사용하는 선택자 </h2>
+	<hr/>
+  
+  <h1>제목1</h1>
+  <h1>제목2</h1>
+  
+  <table>
+    <caption>필터 선택자</caption>
+      <tr>
+        <td>No1</td>
+        <td>No2</td>
+        <td>No3</td>
+      </tr>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>5</td>
+        <td>6</td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td>8</td>
+        <td>9</td>
+      </tr>
+      <tr>
+        <td>10</td>
+        <td>11</td>
+        <td>12</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <ul>
+    <li class="bg">내용1</li>
+    <li class="bg">내용2</li>
+    <li class="bg">내용3</li>
+    <li>내용4</li>
+  </ul>
+</body>
+</html>

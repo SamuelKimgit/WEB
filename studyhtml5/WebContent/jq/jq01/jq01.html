@@ -1,0 +1,65 @@
+<!--Html comment -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="UTF-8">
+<link rel="shortcut icon" type="image/x-icon" href="/studyhtml5/favicon.ico">
+<!-- reset 스타일 시트 -->
+<link rel="stylesheet" type="text/css" href="/studyhtml5/asset/css/reset.css">
+<!--스타일 시트 -->
+<style type="text/css">
+</style>
+<title>Insert title here</title>
+
+<!-- jquery -->
+<script type="text/javascript" src="/studyhtml5/asset/js/jquery-1.12.4.js"></script>
+
+<!-- 자바스크립트 코드 -->
+<script type="text/javascript">
+   $(document).ready(function(){
+	    console.log('PCWK ☆☆☆ document');
+	    $('p').css('border','4px solid red'); /* 태그선택자 */
+	    $('#gnb').css('border','4px solid orange'); /* id선택자 */
+	    $('.logo').css('border','4px solid yellow'); /* class선택자 */
+	    
+	    $('#gnb>ul>li').css('border','4px solid green'); /* 자식 선택자 '>' */
+	    $('#gnb ul').css('border','4px solid blue'); /* 하위 선택자  '(공백)'*/
+	    $('#visual+#content').css('border','4px solid navy'); /* 인접선택자  '+'*/
+	    $('#visual ~ #footer').css('border','4px solid purple'); /* 형제선택자  '~'*/
+	    $('div.util').css('border','4px solid pink'); /* 종속 선택자 */
+	    $('.left, .right, #banner').css('border','4px solid gray'); /* 그룹 선택자 ','*/
+	  });
+</script>
+</head>
+<body>
+	<h2>기본선택자</h2>
+	<hr/>
+  <header id="header">
+    <div class="logo">로고</div>
+    <div class="util">회원가입</div>
+    
+    <nav id="gnb">
+      <ul>
+        <li>메뉴1
+          <ul>메뉴1-1</ul>
+        </li>
+      </ul>
+    </nav>
+    
+    <div id="visual">
+      <p>비주얼</p>
+    </div>
+    
+    <div id="content">
+      <div class="left">왼쪽</div>
+      <div class="right">
+        <div class="util">오른쪽</div>
+      </div>
+    </div>
+    
+    <div id="banner">배너</div>
+    <footer id="footer">푸터</footer>
+  </header>
+</body>
+</html>

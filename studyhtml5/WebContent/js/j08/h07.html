@@ -1,0 +1,28 @@
+<!--Html comment -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="UTF-8">
+<link rel="shortcut icon" type="image/x-icon" href="/studyhtml5/favicon.ico">
+<!--스타일 시트 -->
+<style type="text/css">
+</style>
+<title>Insert title here</title>
+<!-- 자바스크립트 코드 -->
+<script type="text/javascript">
+  window.onload = function(){
+	  console.log(`location.host: ${location.host}`);
+	  console.log(`window.location.port: ${window.location.port}`);
+	  console.log(`window.location.protocol: ${window.location.protocol}`);
+	  console.log(`window.location.pathname: ${window.location.pathname}`);
+  };
+</script>
+</head>
+<body>
+	<h2>location</h2>
+	<hr/>
+  <button onclick="javascript:location.reload();">reload</button>
+  <button onclick="location.replace('https://cafe.daum.net/pcwk')">replace</button>
+</body>
+</html>

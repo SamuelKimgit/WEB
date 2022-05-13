@@ -1,0 +1,37 @@
+<!--Html comment -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="UTF-8">
+<link rel="shortcut icon" type="image/x-icon" href="/studyhtml5/favicon.ico">
+<!--스타일 시트 -->
+<style type="text/css">
+</style>
+<title>Insert title here</title>
+<!-- 자바스크립트 코드 -->
+<script type="text/javascript">
+  window.onload = function(){
+	  // a객체
+	  let pcwk = document.getElementById('pcwk');
+	  
+	  pcwk.onclick = function(event){
+		  alert('PCWK');
+		  //html요소 자체가 가지고 있는 이벤트 막기
+// 		  event.preventDefault();
+		  
+		  //return false; 까지 2가지 방법이 있다.
+		  return false;
+	  };
+  };
+</script>
+</head>
+<body>
+	<h2>preventDefault()</h2>
+	<h5>기본 이벤트는 html요소 중 자바스크립트가 아닌 html요소 자체가 가지고 있는 이벤트를 막기</h5>
+	<hr/>
+	<div>
+	 <a href="https://cafe.daum.net/pcwk" id="pcwk">PCWK</a>
+	</div>
+</body>
+</html>

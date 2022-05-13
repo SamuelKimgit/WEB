@@ -1,0 +1,34 @@
+<!--Html comment -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="UTF-8">
+<link rel="shortcut icon" type="image/x-icon" href="/studyhtml5/favicon.ico">
+<!--스타일 시트 -->
+<style type="text/css">
+</style>
+<title>표준 이벤트 모델</title>
+<!-- 자바스크립트 코드 -->
+<script type="text/javascript">
+  window.onload = function(){
+	  console.log(`window.onload`);
+	  let btn = document.getElementById('btnSave');
+	  
+	  //처리함수
+	  function view(){
+	    alert('표준 이벤트 모델');
+	  }
+	  
+	  //Event감지
+	  btn.addEventListener('click',view);
+  }
+</script>
+</head>
+<body>
+	<h2>표준 이벤트 모델</h2>
+	<hr/>
+  <input type="button" value="표준이벤트" id="btnSave" />
+
+</body>
+</html>

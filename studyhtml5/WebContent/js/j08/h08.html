@@ -1,0 +1,42 @@
+<!--Html comment -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="UTF-8">
+<link rel="shortcut icon" type="image/x-icon" href="/studyhtml5/favicon.ico">
+<!--스타일 시트 -->
+<style type="text/css">
+</style>
+<title>Insert title here</title>
+<!-- 자바스크립트 코드 -->
+<script type="text/javascript">
+  let w = window.screen.width;
+  let h = window.screen.height;
+  
+  console.log(`screen.width: ${w}, screen.height: ${h}`);
+//   h08.html:17 screen.width: 1920, screen.height: 1080
+
+  //h03, 600*400으로 center에 위치하게 팝업을 띄우세요.
+  window.onload = function(){
+    let btn = document.getElementById('btn');
+    btn.onclick = function(){
+    	let url = '/studyhtml5/js/j08/h03.html';
+    	let popupWidth = 600;
+    	let pupupHeight = 400;
+    	
+    	let leftValue = screen.width/2 - popupWidth/2;
+    	let topValue = screen.height/2 - pupupHeight/2;
+    	
+    	console.log(`left: ${leftValue}, top: ${topValue}`);
+//     	window.open(url,"PCWK CAFE",'width=600,height=400,left='+leftValue+',top='+topValue+',location=yes,menubar=yes,toolbar=yes,status=yes,scrollbars=no');
+      window.open(url,'pcwk','width=600, height=400, left='+leftValue+', top='+topValue);
+    };
+  };
+</script>
+</head>
+<body>
+	<button id="btn">center팝업</button>
+
+</body>
+</html>

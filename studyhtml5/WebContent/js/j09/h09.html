@@ -1,0 +1,48 @@
+<!--Html comment -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="UTF-8">
+<link rel="shortcut icon" type="image/x-icon" href="/studyhtml5/favicon.ico">
+<!--스타일 시트 -->
+<style type="text/css">
+</style>
+<title>Insert title here</title>
+<!-- 자바스크립트 코드 -->
+<script type="text/javascript">
+  window.onload = function(){
+	  console.log(`window.onload`);
+	  let frm = document.frm;
+	  let date = new Date();
+	  let year = date.getFullYear();
+	  console.log(`year: ${year}`);
+	  
+	  //년도 뽑아내기
+	  for(let i = 1970; i<=year;i++){
+		  frm.y.add(new Option(i,i));
+	  }
+	  
+	  //월 뽑아내기
+	  for(let i = 1; i<=12; i++){
+		  frm.m.add(new Option(i,i));
+	  }
+	  
+	  //document.form요소.select요소.length = option요소 수(길이.숫자)
+	  //보여주는 갯수 설정!
+	  frm.m.length = 3;
+  }
+</script>
+</head>
+<body>
+  <form action="#" name="frm">
+    <select name="y">
+      <option value="#">년도 선택</option>
+    </select>
+    
+    <select name="m">
+      <option value="#">월 선택</option>
+    </select>
+  </form>
+</body>
+</html>

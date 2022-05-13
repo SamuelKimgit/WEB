@@ -1,0 +1,49 @@
+<!--Html comment -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="keywords" content="html, scc, javascript, jsp" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="UTF-8">
+<!--스타일 시트 -->
+<style type="text/css">
+
+</style>
+
+<title>Insert title here</title>
+<!-- 자바스크립트 코드 -->
+<script type="text/javascript">
+
+</script>
+</head>
+<body>
+	<h2>&lt;input&gt;태그</h2>
+	<p>날짜:2022. 4. 19</p>
+	<hr/>
+	<form action="#">
+	  <!-- autocomplete="on" : 자동완성 on -->
+	  <!-- autofocus : 최초 화면 로딩시 focus지정 -->
+	  <!-- title="아이디를 입력하세요" : 해당 란에 마우스를 갖다대면 도움말 표기 -->
+	  <!-- placeholder="아이디를 입력하세요" : text입력 란에 보이는 힌트 -->
+	  <!-- maxlength="20" : 해당 란에 최대 입력 byte 수 -->
+	  <!-- size="20" : 입력필드에 입력할 수 있는 길이만큼 박스 크기를 지정 -->
+	  <!-- required : DB컬럼의 not null(입력되지 않으면 전송되지 않음.) -->
+	  
+	  <label for="id">아이디</label>
+	  <input type="text" id="id" name="id" autocomplete="on" 
+	   autofocus="autofocus"
+	   title="아이디를 입력하세요" 
+	   placeholder="아이디를 입력하세요"
+	   maxlength="20"
+	   size="20"
+	   required="required"  >
+	  
+	  <label for="passwd">비밀번호</label>
+	  <input type="password"
+	   pattern="[0-9A-Za-z#@$%^*]{6,12}"
+	   required="required"
+	   id="passwd" name="passwd" />
+    <input type="submit" value="전송">
+  </form>
+</body>
+</html>

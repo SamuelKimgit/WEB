@@ -1,0 +1,14 @@
+<html>
+	<head>
+		<title>Hello</title>
+		<style>
+			p {
+				color: red;
+				font-size: 1em;
+			}
+		</style>
+	</head>
+	<body>
+		<p>Hello,world!</p>
+	</body>
+</html>

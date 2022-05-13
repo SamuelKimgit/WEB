@@ -1,0 +1,51 @@
+<!--Html comment -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="UTF-8">
+<link rel="shortcut icon" type="image/x-icon" href="/studyhtml5/favicon.ico">
+<!--스타일 시트 -->
+<style type="text/css">
+</style>
+<title>Insert title here</title>
+<!-- 자바스크립트 코드 -->
+<script type="text/javascript">
+  let brower = window.navigator.userAgent;
+//   console.log('userAgent:' +brower);
+  
+  //브라우저 정보 추출
+  function getBrowerInfo(){
+	  let agent = window.navigator.userAgent.toUpperCase();
+	  console.log('agent:'+agent);
+	  
+	  if(agent.indexOf('EDG') >=0){
+		  return 'EDGE';
+	  }else if(agent.indexOf('CHROME') >=0){
+		  return 'CHROME';
+	  }else if(agent.indexOf('TRIDENT') >=0){
+		  return 'IE';
+	  }else if(agent.indexOf('FIREFOX') >=0){
+		  return 'FIREFOX';
+	  }else{
+		  return '';
+	  }
+	  
+  };
+  
+  window.onload = function(){
+	  document.querySelector
+	  let btn = document.getElementById('btn');
+	  btn.onclick = function(){
+		  //console.log('btn.onclick');
+		  alert(getBrowerInfo());
+	  };
+  };
+</script>
+</head>
+<body>
+	<h2>navigator()</h2>
+	<hr/>
+  <button id="btn">브라우저</button>
+</body>
+</html>
