@@ -2,7 +2,9 @@ package com.pcwk.board;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -53,6 +55,14 @@ public class BoardController extends HttpServlet {
 		
 		//DAO분기
 		switch (workDiv) {
+		case "moveToReg":
+			moveToReg(request,response);
+			break;
+			
+		case "doRetrieve":
+			doRetrieve(request,response);
+			break;
+		
 		case "doSave": //등록 http://localhost:8081/studyhtml5/board/board.do?work_div=doSave
 			doSave(request,response);
 			break;
@@ -61,10 +71,67 @@ public class BoardController extends HttpServlet {
 			break;
 		}//switch
 	}
-
+	
+	protected void moveToReg(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		LOG.debug("=======================");
+		LOG.debug("=moveToReg()=");
+		LOG.debug("=======================");
+		
+		//화면이동 
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/board/board_reg.jsp"); //contextPath생략
+		dispatcher.forward(request, response);
+	}
+	
+	
+	protected void doRetrieve(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		LOG.debug("=======================");
+		LOG.debug("=doRetrieve()=");
+		LOG.debug("=======================");
+		SearchVO param = new SearchVO();
+		
+		//param read
+		//searchDiv="" searchWord="" pageSize=10 pageNum=1
+		String searchDiv = StringUtil.nvl(request.getParameter("searchDiv"),"");
+		String searchWord = StringUtil.nvl(request.getParameter("searchWord"),"");
+		String pageSize = StringUtil.nvl(request.getParameter("pageSize"),"10");
+		String pageNum = StringUtil.nvl(request.getParameter("pageNum"),"1");
+		LOG.debug("--------------------------");
+		LOG.debug("searchDiv: "+searchDiv);
+		LOG.debug("searchWord: "+searchWord);
+		LOG.debug("pageSize: "+pageSize);
+		LOG.debug("pageNum: "+pageNum);
+		LOG.debug("--------------------------");
+		
+		//param to SeachVO
+		param.setSearchDiv(searchDiv);
+		param.setSearchWord(searchWord);
+		param.setPageSize(Integer.parseInt(pageSize));
+		param.setPageNum(Integer.parseInt(pageNum));
+		LOG.debug("param: "+param.toString());
+		//BoardDAO 호출
+		List<BoardVO> list = this.boardDao.doRetrieve(param);
+		
+		//BoardDAO 처리 return받아 화면으로 전송
+		if(list.size()>0) {
+			for(BoardVO vo : list) {
+				//LOG.debug("vo: " + vo);
+			}
+		}
+		
+		//request에 list를 담아 전송
+		request.setAttribute("list", list);
+		//param
+		request.setAttribute("param", param);
+		
+		//받을 url: /board/board_list.jsp
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/board/board_list.jsp"); //contextPath생략
+		//data전송 -> jsp
+		dispatcher.forward(request, response);
+	}
+	
 	protected void doSave(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		LOG.debug("=======================");
-		LOG.debug("=doSave=");
+		LOG.debug("=doSave()=");
 		LOG.debug("=======================");
 		BoardVO paramVO = new BoardVO();
 		//paramSet
@@ -74,7 +141,7 @@ public class BoardController extends HttpServlet {
 		String title = StringUtil.nvl(request.getParameter("title"),"");
 		String regId = StringUtil.nvl(request.getParameter("reg_id"),"");
 		String contents = StringUtil.nvl(request.getParameter("contents"),"");
-//		LOG.debug("=title=" + title);
+		//LOG.debug("=title=" + title);
 		
 		String modId = regId; //최초 등록시 등록자id와 수정자id는 동일
 		
@@ -94,6 +161,7 @@ public class BoardController extends HttpServlet {
 		//flag: 1(성공)/0(실패)
 		MessageVO msgVO = new MessageVO();
 		msgVO.setMessageId(String.valueOf(flag));
+		
 		String message = "";
 		if(1==flag) {
 			message = "등록 성공!";
