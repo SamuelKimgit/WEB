@@ -63,8 +63,9 @@
       <input type="button" value="조회" onclick="doRetrieve()">
       <input type="button" value="등록" id="moveToReg">
     </div>
-    <form action="<%=contPath%>/board/board.do" name="boardListFrm" id="boardListFrm">
+    <form action="<%=contPath%>/board/board.do" name="boardListFrm" method="get" id="boardListFrm">
       <input type="hidden" name="work_div" id="work_div" value="">
+      <input type="hidden" name="seq" id="seq">
       <div>
         <label>구분</label>
         <select name="searchDiv" id="searchDiv">
@@ -85,7 +86,7 @@
       </div>
     </form>
   </div>
-  <table>
+  <table id="listTable">
     <thead>
       <tr>
 	      <th width="80">No.</th>
@@ -124,6 +125,27 @@
   </table>
   
 <script type="text/javascript">
+  //event감지
+  $('#listTable > tbody').on('click','tr',function(){
+	  console.log('listTable');
+	  console.log('this:'+$(this));
+	  let pTr = $(this);
+	  let tdArray = pTr.children();
+	  //let seq = tdArray.eq(5).text();
+	  
+	  let seq = tdArray.last().text();
+	  console.log('seq: '+seq);
+	  let frm = document.getElementById("boardListFrm");
+	  frm.seq.value = seq; //게시판 PK
+	  frm.work_div.value = 'doSelectOne';
+	  
+	  console.log('frm.seq.value: '+frm.seq.value);
+	  console.log('frm.work_div.value: '+frm.work_div.value);
+	  
+	  //서버전송
+	  frm.submit();
+  });
+
   function doRetrieve(){
 	  //alert('doRetrieve()');
 	  //javascript form submit()

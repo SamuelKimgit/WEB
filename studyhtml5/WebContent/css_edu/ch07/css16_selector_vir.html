@@ -1,0 +1,52 @@
+<!--Html comment -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="keywords" content="html, scc, javascript, jsp" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="UTF-8">
+<!--스타일 시트 -->
+<style type="text/css">
+  p:first-letter { /*요소의 첫 글자*/
+    font-size: 200%;
+  }
+  
+  p:first-child {
+    color: green;
+  }
+  
+  p {
+    background: lightgray;
+  }
+  
+  p:last-child {
+    background: palegoldenrod;
+  }
+  
+  p:before {
+    content: "☆";
+  }
+  
+  .box:after {
+    content: "점심 메뉴를 선택하세요.";
+    color: red;
+  }
+  
+  p:nth-child(3) {
+    color: red;
+  }
+</style>
+
+<title>Insert title here</title>
+</head>
+<body>
+	<h2>가상요소 선택자</h2>
+	<hr/>
+  <div class="box">
+    <p>COMPANY</p>
+    <p>PRODUCT</p>
+    <p>SERVICE</p>
+    <p>CUSTOMER</p>
+  </div>
+</body>
+</html>
