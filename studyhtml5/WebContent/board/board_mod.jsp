@@ -22,7 +22,7 @@
 <script type="text/javascript" src="<%=contPath%>/asset/js/jquery-1.12.4.js"></script>
 <!-- jQuery UI -->
 <script type="text/javascript" src="<%=contPath %>/asset/js/jquery-ui.js"></script>
-
+<script type="text/javascript" src="<%=contPath %>/asset/js/common.js"></script>
 <!--스타일 시트 -->
 <style type="text/css">
   table {
@@ -89,7 +89,8 @@
   $('#doUpdate').on('click',function(){
     console.log('#doUpdate');
     let title = $('#title').val();
-    if(null === title || title.trim().length ==0){
+    //if(null === title || title.trim().length ==0){
+    if(isEmpty(title)){
       //focus
       $('#title').focus();
       alert('제목을 입력하세요.');
@@ -98,7 +99,9 @@
     title = title.trim();
     
     let modId = $('#mod_id').val();
-    if(null === modId || modId.trim().length ==0){
+    
+    console.log('isEmpty(modId):' +isEmpty(modId));
+    if(isEmpty(modId) || modId.trim().length ==0){
       //focus
       $('#mod_id').focus();
       alert('수정자 ID를 입력하세요.');
@@ -107,7 +110,7 @@
     modId = modId.trim();
     
     let contents = $('#contents').val();
-    if(null === contents || contents.trim().length ==0){
+    if(isEmpty(contents) || contents.trim().length ==0){
       //focus
       $('#contents').focus();
       alert('내용을 입력하세요.');
@@ -131,8 +134,17 @@
         contents: contents
       },
       success:function(data){//통신 성공
-        console.log("success data:"+data);
-        goList();
+        //console.log("success data:"+data);
+    	  //string to json
+    	  //success data:{"messageId":"1","msgContents":"수정 되었습니다.","no":0}
+    	  const jsonObj = JSON.parse(data);
+    	  
+    	  if(!isEmpty(jsonObj) && jsonObj.messageId=="1"){
+    		  alert(jsonObj.msgContents);
+    		  goList();
+    	  }else{
+    		  alert(jsonObj.msgContents);
+    	  }
       },
       error:function(data){//실패시 처리
         console.log("error:"+data);

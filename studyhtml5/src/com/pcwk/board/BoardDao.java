@@ -532,27 +532,3 @@ public class BoardDao implements WorkDiv<BoardVO> {
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

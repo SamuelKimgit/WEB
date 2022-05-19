@@ -55,6 +55,10 @@ public class BoardController extends HttpServlet {
 		
 		//DAO분기
 		switch (workDiv) {
+		case "doUpdate":
+			doUpdate(request,response);
+			break;
+			
 		case "doDelete":
 			doDelete(request,response);
 			break;
@@ -78,6 +82,54 @@ public class BoardController extends HttpServlet {
 		default:
 			break;
 		}//switch
+	}
+	
+	public void doUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		LOG.debug("=======================");
+		LOG.debug("=doUpdate()=");
+		LOG.debug("=======================");
+		BoardVO param = new BoardVO();
+		//param read
+		String seq = StringUtil.nvl(request.getParameter("seq"),"-1");
+		String title = StringUtil.nvl(request.getParameter("title"),"");
+		String modId = StringUtil.nvl(request.getParameter("modId"),"");
+		String contents = StringUtil.nvl(request.getParameter("contents"),"");
+		LOG.debug("seq: "+seq);
+		LOG.debug("title: "+title);
+		LOG.debug("modId: "+modId);
+		LOG.debug("contents: "+contents);
+		
+		//param to BoardVO
+		param.setSeq(Integer.parseInt(seq));
+		param.setTitle(title);
+		param.setModId(modId);
+		param.setContents(contents);
+		LOG.debug("param: "+param);
+		LOG.debug("=======================");
+		
+		//BoardDao 호출
+		int flag = this.boardDao.doUpdate(param);
+		
+		//return 받은 int를 MessageVO 변환
+		MessageVO msgVO = new MessageVO();
+		String msg = "";
+		
+		if(1 == flag) {
+			msg = "수정 되었습니다.";
+		}else {
+			msg = "수정 실패!";
+		}
+		
+		msgVO.setMessageId(String.valueOf(flag));
+		msgVO.setMsgContents(msg);
+		
+		//Object to json String
+		String jsonString = new Gson().toJson(msgVO);
+		LOG.debug("jsonString: "+jsonString);
+		
+		response.setContentType(StringUtil.CONTENT_UTF_8);
+		PrintWriter out = response.getWriter();
+		out.print(jsonString);
 	}
 	
 	public void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -136,6 +188,13 @@ public class BoardController extends HttpServlet {
 		//BoardDao 호출: BoardVO
 		BoardVO outVO =  this.boardDao.doSelectOne(param);
 		LOG.debug("-outVO-"+outVO);
+		//조회 카운트 증가 && 최초 등록한 사람 == 수정한사람 이면 증가X
+		//login 하고 session으로 처리
+		//if(null != outVO && !outVO.getRegId().equals(param.getModId())) {
+		if(null != outVO) {
+			int readCnt = boardDao.updateReadCnt(param);
+			LOG.debug("readCnt: "+readCnt);
+		}
 		
 		//BoardDao 처리 return받아 화면으로 전송
 		request.setAttribute("vo", outVO);
@@ -181,8 +240,11 @@ public class BoardController extends HttpServlet {
 		param.setPageSize(Integer.parseInt(pageSize));
 		param.setPageNum(Integer.parseInt(pageNum));
 		LOG.debug("param: "+param.toString());
-		//BoardDAO 호출
+		//BoardDAO 호출 : 목록
 		List<BoardVO> list = this.boardDao.doRetrieve(param);
+		
+		//BoardDao 호출 : 총 글수
+		int totalCnt = this.boardDao.totalCount(param);
 		
 		//BoardDAO 처리 return받아 화면으로 전송
 		if(list.size()>0) {
@@ -193,6 +255,8 @@ public class BoardController extends HttpServlet {
 		
 		//request에 list를 담아 전송
 		request.setAttribute("list", list);
+		//총글수
+		request.setAttribute("totalCnt", totalCnt);
 		//param
 		request.setAttribute("param", param);
 		

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<!--스타일 시트 -->
+<style type="text/css">
+  table,th,td {
+    border: 1px solid #000;
+    border-collapse: collapse;
+  }
+  th {
+    background-color: lightblue;
+    color: #fff;
+  }
+  form>#btn {
+    left: 30px;
+  }
+</style>
+<title>Insert title here</title>
+</head>
+<body>
+  <div>
+  <h2>게시-등록</h2>
+  <hr/>
+  <form>
+    <input type="button" name="btn" id="btn" value="등록">
+    <input type="button" name="btn" id="btn" value="목록">
+  </form>
+  <table>
+    <tr>
+      <th width="100">제목</th>
+      <td><input type="text" size="50" maxlength="200"></td>
+    </tr>
+    <tr>
+      <th>등록자</th>
+      <td colspan="2"><input type="text" size="50" maxlength="50"></td>
+    </tr>
+    <tr>
+      <th>내용</th>
+      <td colspan="2"></td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <textarea rows="10" cols="62"></textarea>
+      </td>
+    </tr>
+  </table>
+  </div>
+</body>
+</html>
