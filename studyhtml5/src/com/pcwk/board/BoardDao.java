@@ -9,6 +9,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.pcwk.cmn.PConnection;
+
 public class BoardDao implements WorkDiv<BoardVO> {
 	final Logger LOG = Logger.getLogger(this.getClass());
 	private PConnection pConnection;

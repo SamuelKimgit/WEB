@@ -4,13 +4,56 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 import org.apache.log4j.Logger;
 
 public class PConnection {
 	
-	final Logger LOG = Logger.getLogger(getClass());
+	final static Logger LOG = Logger.getLogger(PConnection.class);
+	//Java™ Naming and Directory (JNDI) API. 
+	private DataSource dataSource;
+	
+	public PConnection() {
+		//DataSource 객체 생성
+		
+		//이름으로 객체 접근
+		try {
+			Context ctx = new InitialContext();
+			
+			Context envContext = (Context) ctx.lookup("java:/comp/env");
+			LOG.debug("1.envContext-"+envContext);
+			
+			dataSource = (DataSource) envContext.lookup("jdbc/oracle");
+			LOG.debug("2.dataSource-"+dataSource);
+		} catch (NamingException e) {
+			LOG.debug("----------------------------");
+			LOG.debug("-NamingException-"+e.getMessage());
+			e.printStackTrace();
+			LOG.debug("----------------------------");
+		}
+	}
 	
 	public Connection connect() {
+		Connection connection = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			LOG.debug("**.connection-"+connection);
+		} catch (SQLException e) {
+			LOG.debug("----------------------------");
+			LOG.debug("-SQLException-"+e.getMessage());
+			e.printStackTrace();
+			LOG.debug("----------------------------");
+		}
+		
+		return connection;
+	}
+}
+	/*public Connection connect() {
 
 		Connection connection = null; // DB�뿰寃� �젙蹂�
 		// jdbc:oracle:thin:@IP:PORT:�쟾�뿭DB紐낆묶
@@ -37,4 +80,4 @@ public class PConnection {
 		return connection;
 	}
 	
-}
+}*/
