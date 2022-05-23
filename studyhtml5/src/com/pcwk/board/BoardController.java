@@ -255,10 +255,12 @@ public class BoardController extends HttpServlet {
 		
 		//request에 list를 담아 전송
 		request.setAttribute("list", list);
+		
 		//총글수
 		request.setAttribute("totalCnt", totalCnt);
+		 
 		//param
-		request.setAttribute("param", param);
+		request.setAttribute("searchVO", param);
 		
 		//받을 url: /board/board_list.jsp
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/board/board_list.jsp"); //contextPath생략

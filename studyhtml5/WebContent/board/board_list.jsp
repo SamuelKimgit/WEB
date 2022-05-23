@@ -4,20 +4,14 @@
 <%@page import="com.pcwk.board.SearchVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<!-- JSTL core -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="/com/common.jsp" %>
 <%
   //param
-  SearchVO param = (SearchVO)request.getAttribute("param");
+  SearchVO param = (SearchVO)request.getAttribute("searchVO");
   //out.println("param: "+param);
   
-  //list
-  List<BoardVO> list = (List<BoardVO>)request.getAttribute("list");
-  if(null != list && list.size()>0){
-	  
-	  for(BoardVO vo : list){
-		  //out.println(vo);
-	  }
-  }
   //null처리
   int totalCnt = request.getAttribute("totalCnt") ==null ? 0 : (Integer)request.getAttribute("totalCnt");
   LOG.debug("totalCnt: "+totalCnt);
@@ -79,31 +73,32 @@
 <body>
   <h2>게시 목록</h2>
   <hr/>
+  
   <div>
     <div>
-      <input type="button" value="조회" onclick="doRetrieve()">
+      <input type="button" value="조회" onclick="doRetrieve('1')">
       <input type="button" value="등록" id="moveToReg">
     </div>
     <form action="<%=contPath%>/board/board.do" name="boardListFrm" method="get" id="boardListFrm">
       <input type="hidden" name="work_div" id="work_div" value="">
       <input type="hidden" name="seq" id="seq">
-      <input type="hidden" name="pageNum" id="pageNum" value="<%if(null != param){out.print(param.getPageNum());}%>"/>
+      <input type="hidden" name="pageNum" id="pageNum" value='<c:if test="${not empty searchVO }">${searchVO.pageNum }</c:if>' />
       <div>
         <label>구분</label>
         <select name="searchDiv" id="searchDiv">
-          <option value="">전체</option>
-          <option value="10" <% if(null != param && "10".equals(param.getSearchDiv())){out.print("selected");} %> >순번</option>
-          <option value="20">제목</option>
-          <option value="30">내용</option>
-          <option value="40">제목+내용</option>
+          <option value="">전체</option><!-- not empty and(&&) -->
+          <option value="10" <c:if test="${not empty searchVO && searchVO.searchDiv=='10'}">selected</c:if> >순번</option>
+          <option value="20" <c:if test="${not empty searchVO && searchVO.searchDiv=='20'}">selected</c:if> >제목</option>
+          <option value="30" <c:if test="${not empty searchVO && searchVO.searchDiv=='30'}">selected</c:if> >내용</option>
+          <option value="40" <c:if test="${not empty searchVO && searchVO.searchDiv=='40'}">selected</c:if> >제목+내용</option>
         </select>
         <input type="text" name="searchWord" id="searchWord" size="15"
-           value="<% if(null != param){out.print(param.getSearchWord());}%>">
+           value='<c:if test="${not empty searchVO }">${searchVO.searchWord }</c:if>'>
         <select name="pageSize" id="pageSize">
-          <option value="10" <% if(null != param && 10 == param.getPageSize()){out.print("selected");} %> >10</option>
-          <option value="20" <% if(null != param && 20 == param.getPageSize()){out.print("selected");} %> >20</option>
-          <option value="50" <% if(null != param && 50 == param.getPageSize()){out.print("selected");} %> >50</option>
-          <option value="100" <% if(null != param && 100 == param.getPageSize()){out.print("selected");} %> >100</option>
+          <option value="10" <c:if test="${not empty searchVO && searchVO.pageSize==10}">selected</c:if> >10</option>
+          <option value="20" <c:if test="${not empty searchVO && searchVO.pageSize==20}">selected</c:if> >20</option>
+          <option value="50" <c:if test="${not empty searchVO && searchVO.pageSize==50}">selected</c:if> >50</option>
+          <option value="100" <c:if test="${not empty searchVO && searchVO.pageSize==100}">selected</c:if> >100</option>
         </select>
       </div>
     </form>
@@ -120,29 +115,26 @@
 	    </tr>
     </thead>
     <tbody>
-    <%
-      if(null != list && list.size()>0){
-        
-        for(BoardVO vo : list){
-    %>
-      <tr>
-        <td class="txt_conter"><%=vo.getNo() %></td>
-        <td><%=vo.getTitle() %></td>
-        <td class="txt_right"><%=vo.getReadCnt() %></td>
-        <td><%=vo.getModId() %></td>
-        <td class="txt_conter"><%=vo.getModDt() %></td>
-        <td style="display: none;"><%=vo.getSeq() %></td>
-      </tr>
-    <%
-        }//for
-      }else{//if
-    %>
-      <tr>
-        <td colspan="99">No data found</td>
-      </tr>
-    <%
-      }//else
-    %>
+    
+    <c:choose>
+      <c:when test="${list.size() > 0 }"><!-- data가 있으면 -->
+	      <c:forEach var="vo" items="${list}">
+	        <tr>
+	          <td class="txt_conter"><c:out value="${vo.no }"/></td>
+	          <td class="txt_left"><c:out value="${vo.title }"/></td>
+	          <td class="txt_right"><c:out value="${vo.readCnt }"/></td>
+	          <td class="txt_left"><c:out value="${vo.modId }"/></td>
+	          <td class="txt_conter"><c:out value="${vo.modDt }"/></td>
+	          <td style="display: none;"><c:out value="${vo.seq }"/></td>
+	        </tr>
+	      </c:forEach>
+      </c:when> 
+      <c:otherwise> <!-- data가 없으면 -->
+        <tr>
+          <td colspan="99">No data found</td>
+        </tr>
+      </c:otherwise>
+    </c:choose>
     
     <!-- paging -->
     <div>
@@ -191,15 +183,24 @@
 	  frm.submit();
   });
 
-  function doRetrieve(){
+  $('#searchWord').on('keydown',function(event){
+	  //alert('#searchWord'+event.which);
+	  if(13==event.which){
+		  doRetrieve('1');
+	  }
+  });
+  
+  function doRetrieve(num){
 	  //alert('doRetrieve()');
 	  //javascript form submit()
 	  //document.boardListFrm == document.getElementById("boardListFrm");
 	  let frm = document.getElementById("boardListFrm");
 	  frm.work_div.value = 'doRetrieve';
+	  frm.pageNum.value = num;
 	  console.log("frm.work_div.value: "+frm.work_div.value);
 	  console.log("frm.searchDiv.value: "+frm.searchDiv.value);
 	  console.log("frm.pageSize.value: "+frm.pageSize.value);
+	  console.log("frm.pageNum.value: "+frm.pageNum.value);
 	  
 	  //form.submit()
 	  frm.submit();
