@@ -47,10 +47,10 @@ public class StringUtil {
 		if (currPageNo > maxPageNo) {
 			return "";
 		}
-
+		
 		html.append("<table border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">   \n");
 		html.append("<tr>                       \n");
-		html.append("<td align=\"center\">                                                                    \n");
+		html.append("<td align=\"center\">                                                   \n");
 		html.append("<ul class=\"pagination pagination-sm\">                                                  \n");
 
 		// <<
@@ -68,10 +68,10 @@ public class StringUtil {
 			html.append("</a></li>     \n");
 		}
 
-		// 1 2 3 ... 10 (숫자보여주기)
+		// 1 2 3 ... 10 (숫자보여주기) //class=\"table-hover\"
 		for (inx = startPageNo; inx <= maxPageNo && inx <= endPageNo; inx++) {
 			if (inx == currPageNo) {// 현재 page
-				html.append("<li  class=\"disabled\" 	>");
+				html.append("<li  class=\"disabled \" 	>");
 				html.append("<a  href=\"javascript:#\"  > ");
 				html.append(inx);
 				html.append("</a> \n");
